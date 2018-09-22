@@ -72,7 +72,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf --bin "C:\cygwin\home\vinkot01\projects\tbsa_internal\syscomp_tbsa_m\out\musca_a\tbsa.elf" --output ".\TBSA_Objects"</UserProg1Name>
+            <UserProg1Name>fromelf --bin ".\TBSA_Objects\tbsa.elf" --output ".\TBSA_Objects"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -395,6 +395,16 @@
               <FileName>s_get_serial.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\s_get_serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_app_image.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\main_app_image.s</FilePath>
+            </File>
+            <File>
+              <FileName>test_code_image.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\test_code_image.s</FilePath>
             </File>
           </Files>
         </Group>
