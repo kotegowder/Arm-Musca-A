@@ -13,7 +13,7 @@
     ALIGN   4
         
 LoaderImage_Test_Base
-   INCBIN ./TBSA_Objects/tbsa_test_combined.bin  
+   INCBIN ./TBSA_out/tbsa_test_combined.bin
 LoaderImage_Test_Limit
 
     END
