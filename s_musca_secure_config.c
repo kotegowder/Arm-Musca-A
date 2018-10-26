@@ -121,11 +121,19 @@ void SAU_and_IDAU_config(void)
     SAU->RLAR = ((NS_DATA_LIMIT-1) & SAU_RLAR_LADDR_Msk) | SAU_RLAR_ENABLE_Msk;
     sau_region++;
 
+#if 0
     SAU->RNR  = sau_region;
     SAU->RBAR = (CMSE_VENEER_REGION_BASE & SAU_RLAR_LADDR_Msk);
     SAU->RLAR = ((CMSE_VENEER_REGION_LIMIT-1) & SAU_RLAR_LADDR_Msk)
                 | SAU_RLAR_ENABLE_Msk
                 | SAU_RLAR_NSC_Msk;
+#else
+    SAU->RNR  = sau_region;
+    SAU->RBAR = (0x10000000UL & SAU_RLAR_LADDR_Msk);
+    SAU->RLAR = ((0x10000000UL + 0x2000UL -1) & SAU_RLAR_LADDR_Msk)
+                | SAU_RLAR_ENABLE_Msk
+                | SAU_RLAR_NSC_Msk;
+#endif
     sau_region++;
 
     /* Configures CODE region (0x1000_0000 to 0x1FFF_FFFF)

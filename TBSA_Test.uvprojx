@@ -173,7 +173,7 @@
             <AdsLven>1</AdsLven>
             <AdsLsxf>1</AdsLsxf>
             <RvctClst>0</RvctClst>
-            <GenPPlst>0</GenPPlst>
+            <GenPPlst>1</GenPPlst>
             <AdsCpuType>"Cortex-M33"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
@@ -311,7 +311,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>0</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -365,8 +365,8 @@
             <noStLib>0</noStLib>
             <RepFail>1</RepFail>
             <useFile>0</useFile>
-            <TextAddressRange>0x10200000</TextAddressRange>
-            <DataAddressRange>0x30000000</DataAddressRange>
+            <TextAddressRange></TextAddressRange>
+            <DataAddressRange></DataAddressRange>
             <pXoBase></pXoBase>
             <ScatterFile>.\musca_a.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
@@ -406,10 +406,18 @@
               <FileType>2</FileType>
               <FilePath>.\test_code_image.s</FilePath>
             </File>
+            <File>
+              <FileName>s_musca_secure_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\s_musca_secure_config.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS Driver</GroupName>
         </Group>
         <Group>
           <GroupName>::Device</GroupName>
@@ -424,6 +432,12 @@
   <RTE>
     <apis/>
     <components>
+      <component Cclass="CMSIS Driver" Cgroup="MPC" Cvendor="ARM" Cversion="1.0.0" condition="Musca CMSIS MPC Device">
+        <package name="Musca_A1_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.0.2"/>
+        <targetInfos>
+          <targetInfo name="TBSA_Test"/>
+        </targetInfos>
+      </component>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.1.2" condition="ARMv6_7_8-M Device">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.4.0"/>
         <targetInfos>
@@ -431,6 +445,12 @@
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.0" condition="Musca SoC Device">
+        <package name="Musca_A1_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.0.2"/>
+        <targetInfos>
+          <targetInfo name="TBSA_Test"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Native Driver" Cgroup="Native MPC" Cvendor="ARM" Cversion="1.0.0" condition="Musca SoC Device">
         <package name="Musca_A1_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.0.2"/>
         <targetInfos>
           <targetInfo name="TBSA_Test"/>

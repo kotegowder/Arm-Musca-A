@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "cmsis.h"
 #include "region_defs.h"
@@ -86,6 +87,7 @@ int main (void)
     printf("\n\r Main App NS_Data   start[0x%08X] end[0x%08X]", (uint32_t)&LoaderImage_NS_Data_Base, (uint32_t)&LoaderImage_NS_Data_Limit);
     printf("\n\r Test Code          start[0x%08X] end[0x%08X]\n\n", (uint32_t)&LoaderImage_Test_Base, (uint32_t)&LoaderImage_Test_Limit);
 
+#if 0
 		tt_response(0x30000000UL);
 		tt_response(0x20010000UL);
 		tt_response(0x20014000UL);
@@ -93,31 +95,41 @@ int main (void)
 		tt_response(0x10000000UL);
 		tt_response(0x20018000UL);
 		printf("\n");
-
+#endif
 		uint32_t dst_adr  = 0x30007000UL;
 		uint32_t dst_size = 0x8000; /* 32KB */
 		printf("\n\rMain App S_Text to     addr[%X] size[%X] ... ", dst_adr, dst_size);
     LoadImage((uint32_t)&LoaderImage_S_Text_Base, (uint32_t)&LoaderImage_S_Text_Limit, 0x30007000, 0x8000);
 
 		dst_adr  = 0x3000F000UL;
-		dst_size = 0x1000; /* 4KB */
+		dst_size = 0xC00; /* 3KB */
     printf("\n\rMain App S_Data to     addr[%X] size[%X] ... ", dst_adr, dst_size);
     LoadImage((uint32_t)&LoaderImage_S_Data_Base, (uint32_t)&LoaderImage_S_Data_Limit, dst_adr, dst_size);
 
-    dst_adr  = 0x10000000UL;
+		dst_adr  = 0x10000000UL;
 		dst_size = 0x2000; /* 8KB */
 		printf("\n\rMain App NSCS_Entry to addr[%X] size[%X] ... ", dst_adr, dst_size);
 		LoadImage((uint32_t)&LoaderImage_NSC_Entry_Base, (uint32_t)&LoaderImage_NSC_Entry_Base, dst_adr, dst_size);
 
 		dst_adr  = 0x20014000UL;
+		dst_size = 0x1800; /* 6KB */
+		printf("\n\rMain App NS_Data to    addr[%X] size[%X] ... ", dst_adr, dst_size);
+    LoadImage((uint32_t)&LoaderImage_NS_Data_Base, (uint32_t)&LoaderImage_NS_Data_Limit, dst_adr, dst_size);
+
+		dst_adr  = 0x20015800UL;
 		dst_size = 0x800; /* 2KB */
     printf("\n\rMain App NS_Text to    addr[%X] size[%X] ... ", dst_adr, dst_size);
     LoadImage((uint32_t)&LoaderImage_NS_Text_Base, (uint32_t)&LoaderImage_NS_Text_Limit, dst_adr, dst_size);
 
-    dst_adr  = 0x20014800UL;
-		dst_size = 0x1800; /* 6KB */
-		printf("\n\rMain App NS_Data to    addr[%X] size[%X] ... ", dst_adr, dst_size);
-    LoadImage((uint32_t)&LoaderImage_NS_Data_Base, (uint32_t)&LoaderImage_NS_Data_Limit, dst_adr, dst_size);
+    if (inpw(0x50021000UL + 0x100) & 0x1) {
+				printf("\n\rPower On reset\n");
+				/* NVRAM Initialization */
+			  memset((void *)0x3000FC10, 0xFF, 128);
+		}
+
+		if ((inpw(0x50021000UL + 0x100) & 0x10UL) || (inpw(0x50021000UL + 0x100) & 0x20UL)) {
+		    outpw((0x50021000UL + 0x100), (inpw(0x50021000UL + 0x100) & 0xFFFFFFFEUL));
+		}
 
     /* Run to MAIN_APP_S */
     FUNC_PTR fp;
